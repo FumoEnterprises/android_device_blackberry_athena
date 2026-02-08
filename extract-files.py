@@ -22,8 +22,8 @@ import extract_utils.tools
 extract_utils.tools.DEFAULT_PATCHELF_VERSION = '0_9'
 
 namespace_imports = [
-    'device/blackberry/sdm660-common',
-    'hardware/qcom-caf/msm8998',
+    'hardware/qcom-caf/sdm660',
+    'vendor/qcom/opensource/display',
     'hardware/qcom-caf/wlan',
     'vendor/blackberry/sdm660-common',
 ]
