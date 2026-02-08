@@ -40,6 +40,10 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/audio/,$(TARGET_COPY_OUT_VENDOR)/etc)
 
+# Athena camera configs
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/camera/,$(TARGET_COPY_OUT_VENDOR)/etc/camera)
+
 # GMS
 PRODUCT_GMS_CLIENTID_BASE := android-blackberry
 
