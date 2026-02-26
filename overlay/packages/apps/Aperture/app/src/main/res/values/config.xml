@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
 <resources>
     <!-- Enable auxiliary cameras selector. -->
     <bool name="config_enableAuxCameras">true</bool>
+
+    <!-- Camera 3 is a duplicate of camera 0 used for dual-camera processing. -->
+    <string-array name="config_ignoredAuxCameraIds">
+        <item>3</item>
+    </string-array>
 </resources>
