@@ -14,8 +14,21 @@ persist.camera.ffcolor.th=3500
 persist.camera.ffcolor.th2=4500
 persist.camera.ffcolor.lev2=FFE4CA
 persist.camera.ffcolor.lev3=ffdcb9
+persist.camera.hal.debug=0
+persist.camera.hal.debug.mask=0
+persist.camera.isp.debug=0
+persist.camera.isp.debug.mask=0
+persist.camera.global.debug=0
 persist.vendor.camera.isp.turbo=1
+#persist.vendor.camera.stats.disablehaf=1
+persist.vendor.camera.af.fovc.enable=0
+# OREO HAL reads non-prefixed property (Android 8 didn't use vendor. namespace)
+video.disable.ubwc=1
+persist.camera.preview.ubwc=0
 vendor.camera.hal1.packagelist=com.dw.btime
+persist.camera.expose.aux=1
+# Dual LED flash balance: l0,l1,h0,h1 (torch_current_0, torch_current_1, flash_current_0, flash_current_1)
+persist.camera.dual_led_current=200,200,750,750
 
 # Fingerprint - Goodix
 # TODO: other devices have nice model names... can we do too?

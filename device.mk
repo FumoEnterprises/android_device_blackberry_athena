@@ -52,5 +52,10 @@ PRODUCT_PACKAGES += \
     libbinder_shim.vendor \
     libfakelogprint
 
+# Camera - Shims for OREO camera HAL
+PRODUCT_PACKAGES += \
+    libskia_shim \
+    libjnigraphics_shim
+
 # Inherit from BlackBerry sdm660-common
 $(call inherit-product, device/blackberry/sdm660-common/common.mk)
