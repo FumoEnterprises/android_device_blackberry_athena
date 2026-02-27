@@ -102,10 +102,6 @@ blob_fixups: blob_fixups_user_type =        {
     # Patch 1: af_core_set_param case 5 — bhi.w at 0x8321e
     # Patch 2: af_state=1 safety net at 0x83b3c (reproducibility of manual patch)
     # Patch 3: af_util_focus_mode_change — bhi at 0x958da
-    # Patch 4: CAF MONITOR refocus suppression — NOP blx af_haf_focus_converge at 0x88e32
-    # In af_haf_process MONITOR state, scene change triggers af_haf_focus_converge causing
-    # periodic rescans every ~5s. Retail uses SAF (locks after focus). This NOP prevents
-    # CAF retrigger while keeping scene change detection and flag clearing intact.
     'vendor/lib/libmmcamera2_q3a_core.so': blob_fixup()
         .binary_regex_replace(
             b'\x03\x38\x02\\x28\x00\xf2\x17\x82\\x28\x46\x84\xf7',
@@ -115,10 +111,7 @@ blob_fixups: blob_fixups_user_type =        {
             b'\x30\x68\x61\x68\xd0\xf8\x64\x01\x01\x21\x61\x60\x60\xb1')
         .binary_regex_replace(
             b'\x41\x58\x03\x39\x02\\x29\x0e\xd8\x72\xf7\x4a\xe8',
-            b'\x41\x58\x03\x39\x02\x29\x00\xbf\x72\xf7\x4a\xe8')
-        .binary_regex_replace(
-            b'\x20\x46\x31\x60\x7e\xf7\x96\xee\\x28\x68',
-            b'\x20\x46\x31\x60\x00\xbf\x00\xbf\x28\x68'),
+            b'\x41\x58\x03\x39\x02\x29\x00\xbf\x72\xf7\x4a\xe8'),
 
     ('vendor/lib/libdualcameraddm.so',
      'vendor/lib/libarcsoft_dualcam_refocus.so',
