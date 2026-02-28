@@ -2069,7 +2069,7 @@ vendor/lib64/hw/gxfingerprint.default.so;DISABLE_DEPS
 vendor/lib64/libvendor.goodix.hardware.fingerprint.hwbinder@2.1.so;DISABLE_DEPS
 
 # Fingerprint client - from NB1 - 00WW_5_16A
-vendor/lib64/libfp_client.so|6d1bc40e8fcef32d518dbbaed0c40a29b561019f|77b7be6397b9f2ec4a10f72c9a6e1e12f164d857
+vendor/lib64/libfp_client.so|fdc9d9311f1ec5f975ac174e2e6fcededa5d294d|77b7be6397b9f2ec4a10f72c9a6e1e12f164d857
 
 # Gatekeeper - from UL-ASUS_X01BD-WW-17.2018.2012.434-user
 vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti|a189a50515831e6ac9a7e88a165ac979ae6ac077
