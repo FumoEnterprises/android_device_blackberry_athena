@@ -102,16 +102,35 @@ blob_fixups: blob_fixups_user_type =        {
     # Patch 1: af_core_set_param case 5 — bhi.w at 0x8321e
     # Patch 2: af_state=1 safety net at 0x83b3c (reproducibility of manual patch)
     # Patch 3: af_util_focus_mode_change — bhi at 0x958da
+    # Patch 5: Force fullsweep AF for telephoto — NOP cbz+blt at 0x89648/0x89658
+    # HJ hill-climbing gets trapped in local FV minimum on telephoto (only scans half range).
+    # This forces the secondary (fullsweep) search handler to always trigger, enabling
+    # full 0-240 step scan so near objects are reliably found on first tap.
+    # Patch 6: PDAF direction passthrough to HJ prescan — trampoline at 0x8c116 + code cave
+    # Qualcomm bug: af_single_set_start_pos loads PDAF direction from depth_info but only
+    # uses it for debug log string selection. The actual prescan direction (r7[0x10]) is set
+    # by position-based heuristic, ignoring PDAF. This trampoline to code cave at 0xb69ba
+    # checks depth_status != 0 (PDAF data available), and if so, uses the PDAF direction
+    # value directly for r7[0x10], giving HJ the correct initial scan direction.
     'vendor/lib/libmmcamera2_q3a_core.so': blob_fixup()
         .binary_regex_replace(
-            b'\x03\x38\x02\\x28\x00\xf2\x17\x82\\x28\x46\x84\xf7',
+            b'\x03\x38\x02\x28\x00\xf2\x17\x82\x28\x46\x84\xf7',
             b'\x03\x38\x02\x28\x00\xbf\x00\xbf\x28\x46\x84\xf7')
         .binary_regex_replace(
-            b'\x30\x68\x61\x68\xd0\xf8\x64\x01\x00\\x29\x75\xd0\x60\xb1',
+            b'\x30\x68\x61\x68\xd0\xf8\x64\x01\x00\x29\x75\xd0\x60\xb1',
             b'\x30\x68\x61\x68\xd0\xf8\x64\x01\x01\x21\x61\x60\x60\xb1')
         .binary_regex_replace(
-            b'\x41\x58\x03\x39\x02\\x29\x0e\xd8\x72\xf7\x4a\xe8',
-            b'\x41\x58\x03\x39\x02\x29\x00\xbf\x72\xf7\x4a\xe8'),
+            b'\x41\x58\x03\x39\x02\x29\x0e\xd8\x72\xf7\x4a\xe8',
+            b'\x41\x58\x03\x39\x02\x29\x00\xbf\x72\xf7\x4a\xe8')
+        .binary_regex_replace(
+            b'\x20\x58\x41\x58\x99\xb1\x41\xf2\xd0\x31\x40\x58\x44\xf2\x40\x21\x61\x58\x81\x42\x0b\xdb',
+            b'\x20\x58\x41\x58\x00\xbf\x41\xf2\xd0\x31\x40\x58\x44\xf2\x40\x21\x61\x58\x81\x42\x00\xbf')
+        .binary_regex_replace(
+            b'\x38\x74\xc8\xbf\x01\x23',
+            b'\x2a\xf0\x50\xbc\x00\xbf')
+        .binary_regex_replace(
+            b'\x4c\x3e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+            b'\x4c\x3e\x00\x00\x00\x00\x00\x01\x06\xb4\x41\xf2\xb0\x51\x79\x58\x0a\x69\x12\x68\x02\x2a\x02\xd1\x89\x68\x08\x68\x38\x74\x06\xbc\xca\x45\xc8\xbf\x01\x23\xd5\xf7\xa0\xbb'),
 
     ('vendor/lib/libdualcameraddm.so',
      'vendor/lib/libarcsoft_dualcam_refocus.so',
