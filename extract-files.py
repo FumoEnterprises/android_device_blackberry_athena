@@ -79,6 +79,7 @@ blob_fixups: blob_fixups_user_type =        {
         .remove_needed('libsoftkeymaster.so')
         .remove_needed('libkeymaster_messages.so')
         .replace_needed('libstdc++.so', 'libstdc++_vendor.so')
+        #.replace_needed('libhidlbase.so', 'libhidlbase-v32.so')
         .add_needed('libbinder_shim.so')
         .add_needed('libfakelogprint.so'),
 
@@ -98,6 +99,23 @@ blob_fixups: blob_fixups_user_type =        {
         .binary_regex_replace(
             b'\x14\xd1\x0d\xf5\x40\x5e\xbe\xf8\x2c\x40\x05\xe1',
             b'\x14\xd1\xb7\xee\x00\x8a\x00\xbf\x00\xbf\x14\xe0'),
+
+    # Cams - OREO stats_lib AF tuning patches (baked into source blob)
+    # P7: min_stable_cnt fix at 0x18d3d -- BNE->B so telephoto always gets min_stable_cnt=3
+    #   (default table returns 1 for telephoto = single defocused PDAF frame triggers refocus cascade)
+    # P11: af_haf_fine_search direction fix -- always scan toward infinity first
+    #   0x18e26: 0x00->0x0a (direction formula operand)
+    #   0x194a4: 0x00->0x02 (force initial direction=2, toward infinity)
+    'vendor/lib/libmmcamera2_stats_lib.so': blob_fixup()
+        .binary_regex_replace(
+            re.escape(b'\x29\x08\xd1\x0b\xf1'),
+            b'\x29\x08\xe0\x0b\xf1')
+        .binary_regex_replace(
+            re.escape(b'\x20\x0a\xea\x00'),
+            b'\x20\x0a\xea\x0a')
+        .binary_regex_replace(
+            re.escape(b'\x00\xe0\x00\x25\xda\xf8'),
+            b'\x00\xe0\x02\x25\xda\xf8'),
 
     # Cams - OREO q3a_core AF AUTO mode fix
     # NOP range-check branches that skip AF_INIT for non-CAF modes (AUTO=1, MACRO=2)
