@@ -48,6 +48,7 @@ blob_fixups: blob_fixups_user_type =        {
         .remove_needed('libsoftkeymaster.so')
         .remove_needed('libkeymaster_messages.so')
         .replace_needed('libstdc++.so', 'libstdc++_vendor.so')
+        .add_needed('libhidl_shim_full.so')
         .add_needed('libbinder_shim.so')
         .add_needed('libfakelogprint.so'),
 
@@ -63,6 +64,7 @@ blob_fixups: blob_fixups_user_type =        {
         .remove_needed('libkeymaster_messages.so')
         .replace_needed('libstdc++.so', 'libstdc++_vendor.so')
         .add_needed('libbinder_shim.so')
+        .add_needed('libfakelogprint.so')
         .binary_regex_replace(b'/system/etc/firmware', b'/vendor/firmware\x00\x00\x00\x00'),
 
     # Fingerprint
@@ -79,7 +81,7 @@ blob_fixups: blob_fixups_user_type =        {
         .remove_needed('libsoftkeymaster.so')
         .remove_needed('libkeymaster_messages.so')
         .replace_needed('libstdc++.so', 'libstdc++_vendor.so')
-        #.replace_needed('libhidlbase.so', 'libhidlbase-v32.so')
+        .replace_needed('libhidlbase.so', 'libhidl_shim_full.so')
         .add_needed('libbinder_shim.so')
         .add_needed('libfakelogprint.so'),
 
