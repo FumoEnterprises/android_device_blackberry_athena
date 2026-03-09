@@ -17,7 +17,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 PRODUCT_BRAND := BlackBerry
 PRODUCT_DEVICE := athena
 PRODUCT_MANUFACTURER := TCL Technology
-PRODUCT_MODEL := BlackBerry Key2
+PRODUCT_MODEL := BlackBerry KEY2
 PRODUCT_NAME := lineage_athena
 
 # need to keep old FPs from oreo for play certification
